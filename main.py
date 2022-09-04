@@ -11,14 +11,19 @@ chrome_options.add_argument("--no-sandbox")
 driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()))
 driver.get("http://www.python.org")
 
+
 s = sched.scheduler(time.time, time.sleep)
 
 
 def main(sc):
+    # Do something
     print(driver.title)
-    sc.enter(30, 1, main, (sc,))
+
+    # Intervals for function in sec
+    sc.enter(10, 1, main, (sc,))
 
 
 if __name__ == '__main__':
-    s.enter(30, 1, main, (s,))
+    # Initial sched starter
+    s.enter(1, 1, main, (s,))
     s.run()
