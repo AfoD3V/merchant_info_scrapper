@@ -13,7 +13,7 @@ class Scraper:
         # URL of site where do want to proceed scrap
         self.url = url
 
-    def scrape_data(self, region_name: str = "EU Central", server_name: str = "Procyon") -> str:
+    def scrape_data(self, region_name: str = "EU Central", server_name: str = "Procyon"):
         # Chrome settings
         chrome_options = webdriver.ChromeOptions()
         chrome_options.add_argument("--headless")
@@ -45,6 +45,13 @@ class Scraper:
 
         return str(soup)
 
+    @staticmethod
+    def create_csv_file(file_data):
+        # Data frame for further csv file
+        df = pd.read_html(file_data)
+        df[0].to_csv('work_files/csv_data.csv')
 
-c = Scraper()
-print(c.scrape_data())
+
+c = Scraper("https://lostmerchants.com/")
+data = c.scrape_data()
+c.create_csv_file(data)
