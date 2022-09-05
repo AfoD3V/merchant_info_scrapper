@@ -58,7 +58,7 @@ class FileCreator:
         df[0].to_csv(self.data_path)
 
     def format_csv_file(self):
-        with open(self.data_path) as f:
+        with open(self.data_path, 'w') as f:
             for line in f:
                 if 150 < len(line) < 400:
                     print(line)
@@ -68,4 +68,5 @@ scrappy = Scraper()
 data = scrappy.scrape_data()
 
 file = FileCreator(data)
+file.create_csv_file()
 file.format_csv_file()
