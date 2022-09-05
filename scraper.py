@@ -45,13 +45,27 @@ class Scraper:
 
         return str(soup)
 
-    @staticmethod
-    def create_csv_file(file_data):
+
+class FileCreator:
+
+    def __init__(self, html_data):
+        self.data = html_data
+        self.data_path = 'work_files/csv_data.csv'
+
+    def create_csv_file(self):
         # Data frame for further csv file
-        df = pd.read_html(file_data)
-        df[0].to_csv('work_files/csv_data.csv')
+        df = pd.read_html(self.data)
+        df[0].to_csv(self.data_path)
+
+    def format_csv_file(self):
+        with open(self.data_path) as f:
+            for line in f:
+                if 150 < len(line) < 400:
+                    print(line)
 
 
-c = Scraper("https://lostmerchants.com/")
-data = c.scrape_data()
-c.create_csv_file(data)
+scrappy = Scraper()
+data = scrappy.scrape_data()
+
+file = FileCreator(data)
+file.format_csv_file()
