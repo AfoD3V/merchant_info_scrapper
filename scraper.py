@@ -62,8 +62,6 @@ class EuProcyonScraper(Scrapper):
         return str(soup)
 
 
-
-
 scrappy = EuProcyonScraper()
 data = scrappy.scrape_data()
 print(type(data))
