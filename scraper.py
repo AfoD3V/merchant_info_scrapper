@@ -6,14 +6,30 @@ from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.support.ui import Select
 from selenium.webdriver.common.by import By
 from bs4 import BeautifulSoup
+from abc import ABC, abstractmethod
 
 
-class Scraper:
-    def __init__(self, url: str = "https://lostmerchants.com/"):
+class Scrapper(ABC):
+    @abstractmethod
+    def __init__(self):
         # URL of site where do want to proceed scrap
-        self.url = url
+        self.url = "https://lostmerchants.com/"
+        self.region = "region_name"
+        self.server = "server_name"
 
-    def scrape_data(self, region_name: str = "EU Central", server_name: str = "Procyon"):
+    @abstractmethod
+    def scrape_data(self):
+        pass
+
+
+class EuProcyonScraper(Scrapper):
+    def __init__(self):
+        # URL of site where do want to proceed scrap
+        self.url = "https://lostmerchants.com/"
+        self.region = "EU Central"
+        self.server = "Procyon"
+
+    def scrape_data(self) -> str:
         # Chrome settings
         chrome_options = webdriver.ChromeOptions()
         chrome_options.add_argument("--headless")
@@ -30,12 +46,12 @@ class Scraper:
         # Region selection if not set in params than going "EU central" by default
         region = driver.find_element(By.ID, 'severRegion')
         drp_region = Select(region)
-        drp_region.select_by_visible_text(region_name)
+        drp_region.select_by_visible_text(self.region)
 
         # Server selection if not set in params than going "Procyon" by default
         server = driver.find_element(By.ID, 'server')
         drp_region = Select(server)
-        drp_region.select_by_visible_text(server_name)
+        drp_region.select_by_visible_text(self.server)
 
         # Sleep time for rest of dynamically generated content to load in
         time.sleep(5)
@@ -46,27 +62,8 @@ class Scraper:
         return str(soup)
 
 
-class FileCreator:
-
-    def __init__(self, html_data):
-        self.data = html_data
-        self.data_path = 'work_files/csv_data.csv'
-
-    def create_csv_file(self):
-        # Data frame for further csv file
-        df = pd.read_html(self.data)
-        df[0].to_csv(self.data_path)
-
-    def format_csv_file(self):
-        with open(self.data_path, 'w') as f:
-            for line in f:
-                if 150 < len(line) < 400:
-                    print(line)
 
 
-scrappy = Scraper()
+scrappy = EuProcyonScraper()
 data = scrappy.scrape_data()
-
-file = FileCreator(data)
-file.create_csv_file()
-file.format_csv_file()
+print(type(data))
