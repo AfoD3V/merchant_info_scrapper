@@ -14,6 +14,7 @@ class Scrapper(ABC):
     def __init__(self):
         # URL of site where do want to proceed scrap
         self.url = "https://lostmerchants.com/"
+        # Region and server for further scrap
         self.region = "region_name"
         self.server = "server_name"
 
@@ -62,6 +63,30 @@ class EuProcyonScraper(Scrapper):
         return str(soup)
 
 
+class FileCreator(ABC):
+    @abstractmethod
+    def __init__(self, file_type: str):
+        self.data_path = f'work_files/{file_type}_file.{file_type}'
+
+    @abstractmethod
+    def create_file(self, scrapped_data: str):
+        pass
+
+
+class CsvFileCreator(FileCreator):
+    def __init__(self, file_type: str):
+        self.data_path = f'work_files/{file_type}_file.{file_type}'
+
+    def create_file(self, scrapped_data: str):
+        # Data frame for further csv file
+        df = pd.read_html(scrapped_data)
+        df[0].to_csv(self.data_path)
+        df = pd.read_html(scrapped_data)
+        df[0].to_csv(self.data_path)
+
+
 scrappy = EuProcyonScraper()
 data = scrappy.scrape_data()
-print(type(data))
+
+csv_file = CsvFileCreator('csv')
+csv_file.create_file(data)
