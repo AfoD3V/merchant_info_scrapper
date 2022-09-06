@@ -66,9 +66,11 @@ class EuProcyonScraper(Scrapper):
 class FileCreator(ABC):
     @abstractmethod
     def __init__(self, file_type: str):
+        # Path for file creation
         self.data_path = f'work_files/{file_type}_file.{file_type}'
 
     @abstractmethod
+    # Method to make csv_file from scrapped data
     def create_file(self, scrapped_data: str):
         pass
 
