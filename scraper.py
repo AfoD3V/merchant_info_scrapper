@@ -93,8 +93,8 @@ class CsvFileCreator(FileCreator):
 
 
 # Usage
-# scrappy = EuProcyonScraper()
-# data = scrappy.scrape_data()
-#
-# csv_file = CsvFileCreator('csv')
-# csv_file.create_file(data)
+scrappy = EuProcyonScraper()
+data = scrappy.scrape_data()
+
+csv_file = CsvFileCreator('csv')
+csv_file.create_file(data)
