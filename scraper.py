@@ -23,14 +23,9 @@ class Scrapper(ABC):
         pass
 
 
-class EuProcyonScraper(Scrapper):
-    def __init__(self):
-        # URL of site where do want to proceed scrap
-        self.url = "https://lostmerchants.com/"
-        self.region = "EU Central"
-        self.server = "Procyon"
-
-    def scrape_data(self) -> str:
+class ScrapperSettings:
+    @staticmethod
+    def scraper_settings(url, region_name, server_name):
         # Chrome settings
         chrome_options = webdriver.ChromeOptions()
         chrome_options.add_argument("--headless")
@@ -39,7 +34,7 @@ class EuProcyonScraper(Scrapper):
 
         # URL and driver settings
         driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()))
-        driver.get(self.url)
+        driver.get(url)
 
         # Waiting for drop_down menu content to load
         driver.implicitly_wait(5)
@@ -47,20 +42,32 @@ class EuProcyonScraper(Scrapper):
         # Region selection if not set in params than going "EU central" by default
         region = driver.find_element(By.ID, 'severRegion')
         drp_region = Select(region)
-        drp_region.select_by_visible_text(self.region)
+        drp_region.select_by_visible_text(region_name)
 
         # Server selection if not set in params than going "Procyon" by default
         server = driver.find_element(By.ID, 'server')
         drp_region = Select(server)
-        drp_region.select_by_visible_text(self.server)
+        drp_region.select_by_visible_text(server_name)
 
         # Sleep time for rest of dynamically generated content to load in
         time.sleep(5)
 
         # Parsing html
         soup = BeautifulSoup(driver.page_source, 'lxml')
-
         return str(soup)
+
+
+class EuProcyonScraper(Scrapper):
+    def __init__(self):
+        # URL of site where do want to proceed scrap
+        self.url = "https://lostmerchants.com/"
+        self.region = "EU Central"
+        self.server = "Procyon"
+
+    def scrape_data(self) -> str:
+        settings = ScrapperSettings()
+        soup_string = settings.scraper_settings(self.url, self.region, self.server)
+        return soup_string
 
 
 class FileCreator(ABC):
@@ -83,12 +90,11 @@ class CsvFileCreator(FileCreator):
         # Data frame for further csv file
         df = pd.read_html(scrapped_data)
         df[0].to_csv(self.data_path)
-        df = pd.read_html(scrapped_data)
-        df[0].to_csv(self.data_path)
 
 
-scrappy = EuProcyonScraper()
-data = scrappy.scrape_data()
-
-csv_file = CsvFileCreator('csv')
-csv_file.create_file(data)
+# Usage
+# scrappy = EuProcyonScraper()
+# data = scrappy.scrape_data()
+#
+# csv_file = CsvFileCreator('csv')
+# csv_file.create_file(data)
