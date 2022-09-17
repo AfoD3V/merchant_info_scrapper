@@ -212,9 +212,3 @@ csv_file = CsvFileCreator()
 4. Create file
 csv_file.create_file(data)
 """
-
-scrappy = EuProcyonScraper()
-data = scrappy.scrape_data()
-print(type(data))
-# csv_file = CsvFileCreator()
-# csv_file.create_file(data)
