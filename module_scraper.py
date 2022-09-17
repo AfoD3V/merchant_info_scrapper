@@ -196,9 +196,19 @@ class CsvFileCreator(FileCreator):
         df = pd.read_html(scrapped_data)
         df[0].to_csv(self.data_path)
 
-# Usage
-# scrappy = EuProcyonScraper()
-# data = scrappy.scrape_data()
-#
-# csv_file = CsvFileCreator()
-# csv_file.create_file(data)
+
+"""
+Basic usage schema:
+
+1. create any instance of scrapper
+scrappy = EuProcyonScraper()
+
+2. make a var to store scrapped data
+data = scrappy.scrape_data()
+
+3. Make a instance of file creator
+csv_file = CsvFileCreator()
+
+4. Create file
+csv_file.create_file(data)
+"""
