@@ -15,3 +15,5 @@ if __name__ == '__main__':
     # Initial sched starter
     s.enter(1, 1, main, (s,))
     s.run()
+
+# TEST
