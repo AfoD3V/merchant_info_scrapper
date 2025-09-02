@@ -1,6 +1,6 @@
 # Selenium Merchant Info Scraper [DEPRECATED]
 
-## ?? Deprecation Notice
+## ⚠️ Deprecation Notice
 This project is deprecated and no longer maintained. It is kept for reference purposes only. The code may not work with current website structures and dependencies.
 
 ## Project Description
