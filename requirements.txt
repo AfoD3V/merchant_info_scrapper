@@ -1,5 +1,9 @@
-selenium~=4.4.3
-webdriver-manager~=3.8.3
-pandas~=1.4.4
-bs4~=0.0.1
-lxml~=4.9.1
+# Core dependencies
+selenium==4.4.3
+webdriver-manager==3.8.3
+pandas==1.4.4
+beautifulsoup4==4.11.1  # Explicit requirement instead of bs4
+lxml==4.9.1
+
+# Note: This requirements file is for historical reference.
+# The project is deprecated and dependencies may be outdated.

@@ -1,24 +1,28 @@
-"""Scrapper for collecting data from website
+"""Web Scraper for Merchant Information
 
-This module allow user to get data from website which is covering location
-and items which specified merchant is holding for-sell.
+This module provides functionality to scrape merchant data from a gaming website,
+including location and available items for sale.
 
-This module requires that `pandas`, 'selenium', 'webdriver_manager', 'bs4'
-be installed within the Python environment you are running this module in.
+Dependencies:
+    - pandas: Data manipulation and CSV handling
+    - selenium: Web automation and scraping
+    - webdriver_manager: Chrome driver management
+    - bs4: HTML parsing
 
-This file can also be imported as a module and contains the following
-functions:
+Classes:
+    Scrapper (ABC):
+        Abstract base class defining the scraping interface.
+    
+    ScrapperSettings:
+        Configuration provider for web scraping setup.
+    
+    EuProcyonScraper:
+        Implementation of the scraper for specific website data collection.
+    
+    CsvFileCreator:
+        Utility class for converting scraped data to CSV format.
 
-    * EuProcyonScraper class which is providing function:
-        scrape_data()
-            Function is collecting full code from dynamically generated content
-            and returning string object.
-
-    * CsvFileCreator class which is providing function:
-        create_file(scrapped_data: str)
-            Function for creating csv file from scrapped data, parameter
-            which is given for this method, should be provided by EuProcyonScraper
-            instance with a use of scrape_data() method.
+Note: This code is deprecated and kept for reference only.
 """
 
 import time

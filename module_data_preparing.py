@@ -1,13 +1,15 @@
-"""Module which is checking if any item of available merchants is valuable, also this module is providing
-data ready to be given as an API endpoint.
+"""Data Processing Module for Merchant Items
 
-This file can also be imported as a module and contains the following
-functions:
+This module processes scraped merchant data to identify valuable items and
+formats the data for API consumption.
 
-    * RareItem class which is providing function:
-        data_formatter()
-            Function is loading csv file from specified direction, filtering provided
-            data and return ready data set.
+Features:
+    - Filters merchant data for specific valuable items
+    - Processes raw CSV data into structured format
+    - Prepares data for API endpoint usage
+    - Pattern matching for item identification
+
+Note: This code is deprecated and kept for reference only.
 """
 
 import re
